@@ -1,0 +1,228 @@
+//---------------------------------------------------------------------------
+
+#include <fmx.h> 
+#pragma hdrstop
+
+#include "Unit1.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.fmx"
+#pragma resource ("*.XLgXhdpiTb.fmx", _PLAT_ANDROID)
+#pragma resource ("*.LgXhdpiPh.fmx", _PLAT_ANDROID)
+#pragma resource ("*.SmXhdpiPh.fmx", _PLAT_ANDROID)
+#pragma resource ("*.NmXhdpiPh.fmx", _PLAT_ANDROID)
+
+Tfm *fm;
+//---------------------------------------------------------------------------
+__fastcall Tfm::Tfm(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+
+// Навигация в приложении
+// Переход с главной страницы на форму входа
+/*Метод GotoVisibleTab анимирует переход переключателя в зависимости от взаимных положений текущей выделенной вкладки и указанной вкладки указателя.*/
+
+void __fastcall Tfm::BuEnterClick(TObject *Sender)
+{
+	tc->GotoVisibleTab(Enter->Index);
+}
+//---------------------------------------------------------------------------
+
+// Переход с главной страницы на вкладку с информацией
+
+void __fastcall Tfm::BuInfoClick(TObject *Sender)
+{
+	tc->GotoVisibleTab(Info->Index);
+}
+//---------------------------------------------------------------------------
+
+// Переход с главной страницы на страницу записи на прием
+
+void __fastcall Tfm::BuZapisClick(TObject *Sender)
+{
+	tc->GotoVisibleTab(NoRegistrZapis->Index);
+}
+//---------------------------------------------------------------------------
+
+// Переход с главной страницы на страницу с формой регистрации
+
+void __fastcall Tfm::BuRegistrClick(TObject *Sender)
+{
+	tc->GotoVisibleTab(Registr->Index);
+}
+//---------------------------------------------------------------------------
+
+// Проверка на заполненность полей в форме регистрации пациента
+// IsEmpty возвращает true, если объект UnicodeString пуст, в противном случае - false.
+/*Процедура ShowMessage принимает простую строку в качестве параметра, отображает ее в стереотипном поле и ожидает нажатия кнопки мыши или события Enter-key*/
+  прежде чем вернуться к вызывающей подпрограмме или программе.
+
+void __fastcall Tfm::BuEnterinClick(TObject *Sender)
+{
+	if(edEnterSnils->Text.IsEmpty() || edEnterPassword->Text.IsEmpty()) {
+		ShowMessage("Не все поля заполнены или вы ввели не правильные данные");
+	}
+
+	else
+	tc->GotoVisibleTab(tiPage->Index);
+}
+
+//---------------------------------------------------------------------------
+
+/*Передача данных пациента при входе в личный кабинет*/
+void __fastcall Tfm::BuRegistrinClick(TObject *Sender)
+{
+	if(edSurname->Text.IsEmpty() || edName->Text.IsEmpty() || edSnils->Text.IsEmpty() || edPassword->Text.IsEmpty()){
+		ShowMessage("Не все поля заполнены!");
+	}
+
+	else
+	tc->GotoVisibleTab(Enter->Index);
+	edLKSurname->Text = edSurname->Text;
+	edLKName->Text = edName->Text;
+	edLKSnils->Text = edSnils->Text;
+    edLKEmail->Text = edEmail->Text;
+}
+//---------------------------------------------------------------------------
+void __fastcall Tfm::BuGeneralClick(TObject *Sender)
+{
+	tc->GotoVisibleTab(General->Index);
+}
+//---------------------------------------------------------------------------
+void __fastcall Tfm::BuNoRegistr1Click(TObject *Sender)
+{
+	tc->GotoVisibleTab(NoRegistrZapis2->Index);
+}
+//---------------------------------------------------------------------------
+void __fastcall Tfm::BuNoRegistrEndClick(TObject *Sender)
+{
+	tc->GotoVisibleTab(EndZapis->Index);
+}
+//---------------------------------------------------------------------------
+void __fastcall Tfm::Button4Click(TObject *Sender)
+{
+	tc->GotoVisibleTab(NoRegistrZapis->Index);
+}
+//---------------------------------------------------------------------------
+void __fastcall Tfm::FormCreate(TObject *Sender)
+{
+	tc->ActiveTab = General;
+	tc->TabPosition = TTabPosition::None;
+}
+//---------------------------------------------------------------------------
+void __fastcall Tfm::Button7Click(TObject *Sender)
+{
+	tc->GotoVisibleTab(tiCard->Index);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall Tfm::buTimetableClick(TObject *Sender)
+{
+  	tc->GotoVisibleTab(tiTimeTable->Index);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall Tfm::buBacktomenuClick(TObject *Sender)
+{
+	tc->GotoVisibleTab(General->Index);
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall Tfm::Button8Click(TObject *Sender)
+{
+	tc->GotoVisibleTab(tiCard->Index);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall Tfm::Button9Click(TObject *Sender)
+{
+	tc->GotoVisibleTab(tiPage->Index);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall Tfm::Button11Click(TObject *Sender)
+{
+   	tc->GotoVisibleTab(tiCardZapis3->Index);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall Tfm::Button12Click(TObject *Sender)
+{
+	tc->GotoVisibleTab(tiCardZapis2->Index);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall Tfm::Button10Click(TObject *Sender)
+{
+	tc->GotoVisibleTab(tiCardZapis1->Index);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall Tfm::Button16Click(TObject *Sender)
+{
+	tc->GotoVisibleTab(tiTimeTable->Index);
+}
+//---------------------------------------------------------------------------
+
+/*При нажатии на кнопку отображение расписания работы врачей*/
+//Метод Clear() задает пустое значение для поля 
+//Add() - метод, добавляющий пустую строку в конец свойства Lines 
+
+void __fastcall Tfm::Button17Click(TObject *Sender)
+{
+	Memo4->Lines->Clear();
+	Memo4->Lines->Add("понедельник - 9:00 - 19-00");
+	Memo4->Lines->Add("вторник - 9:00 - 19-00");
+	Memo4->Lines->Add("среда - 9:00 - 19-00");
+	Memo4->Lines->Add("четверг - 9:00 - 19-00");
+	Memo4->Lines->Add("пятница - 9:00 - 19-00");
+	Memo4->Lines->Add("суббота - 9:00 - 19-00");
+}
+//---------------------------------------------------------------------------
+
+void __fastcall Tfm::Button21Click(TObject *Sender)
+{
+	Memo4->Lines->Clear();
+	Memo4->Lines->Add("вторник - 9:00 - 16-00");
+	Memo4->Lines->Add("среда - 9:00 - 16-00");
+	Memo4->Lines->Add("четверг - 9:00 - 16-00");
+}
+//---------------------------------------------------------------------------
+
+void __fastcall Tfm::Button20Click(TObject *Sender)
+{
+	Memo4->Lines->Clear();
+	Memo4->Lines->Add("понедельник - 9:00 - 14-00");
+	Memo4->Lines->Add("вторник - 9:00 - 17-00");
+	Memo4->Lines->Add("пятница - 9:00 - 14-00");
+}
+//---------------------------------------------------------------------------
+
+void __fastcall Tfm::Button19Click(TObject *Sender)
+{
+	Memo4->Lines->Clear();
+	Memo4->Lines->Add("вторник - 9:00 - 17-00");
+	Memo4->Lines->Add("среда - 9:00 - 17-00");
+	Memo4->Lines->Add("четверг - 9:00 - 17-00");
+}
+//---------------------------------------------------------------------------
+
+void __fastcall Tfm::Button18Click(TObject *Sender)
+{
+	Memo4->Lines->Clear();
+	Memo4->Lines->Add("понедельник - 9:00 - 17-00");
+	Memo4->Lines->Add("среда - 9:00 - 17-00");
+	Memo4->Lines->Add("четверг - 9:00 - 17-00");
+
+}
+//---------------------------------------------------------------------------
+
+//Переход на главную страницу
+void __fastcall Tfm::Button15Click(TObject *Sender)
+{
+    tc->GotoVisibleTab(General->Index);
+}
+//---------------------------------------------------------------------------
